@@ -8,8 +8,20 @@ MWT::MWT() {
     root = new MWTNode();
 }
 
+/**
+ * Helper function to recursively free memory
+ */
+void destructorHelper(MWTNode* curr) {
+    for (MWTNode* child : curr->edges) {
+        destructorHelper(child);
+    }
+
+    delete child;
+    child = nullptr;
+}
+
 MWT::~MWT() {
-    // TODO
+    destructorHelper(root);
 }
 
 /**
