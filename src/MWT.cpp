@@ -13,11 +13,13 @@ MWT::MWT() {
  */
 void destructorHelper(MWTNode* curr) {
     for (MWTNode* child : curr->edges) {
-        destructorHelper(child);
+        if (child != nullptr) {
+            destructorHelper(child);
+        }
     }
 
-    delete child;
-    child = nullptr;
+    delete curr;
+    curr = nullptr;
 }
 
 MWT::~MWT() {
@@ -47,6 +49,9 @@ bool MWT::find(string s) {
  */
 void MWT::remove(string s) {
     MWTNode* curr = root;
+    // Check that s is in the trie
+    if (find(s) == false) { return; }
+
     for (char c : s) {
         if (curr->hasEdge(c) == false) { return; }
 
@@ -64,6 +69,9 @@ void MWT::remove(string s) {
  */
 void MWT::insert(string s) {
     MWTNode* curr = root;
+
+    // Check if the word is already in the trie
+    if (find(s)) { return; }
 
     for (char c : s) {
         if (!curr->hasEdge(c)) {

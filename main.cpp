@@ -8,13 +8,28 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    // Instance vars
+    MWT trie;
+
     /* Arg Handling */
     // Check we have 3 args if not print usage message
     if (argc != 3) {
         cout << "usage: ./solver [board_path] [solution_path]" << endl;
     }
 
+    /* Build MWT */
+    string wordPath = "word_list/words.txt";
+    ifstream my_file(wordPath);      // open the file
+    string line;                     // helper var to store current line
+    while(getline(my_file, line)) {  // read one line from the file
+        istringstream ss(line);      // create istringstream of current line
+        string word; // helper vars
+        getline(ss, word, '\n');     // store first column in "first"
 
+        // Add word to mwt
+        trie.insert(word);
+    }
+    my_file.close();                 // close file when done
 
     string boardPath = argv[1];
     string solPath = argv[2];
